@@ -4,6 +4,9 @@ const route = express.Router();
 // database
 const projectsDb = require("../data/helpers/projectModel");
 
+// middleware
+const checkNameLength = require("../middleware/nameLength");
+
 // routes
 route.get("/", async (req, res) => {
   const projects = await projectsDb.get();
@@ -43,6 +46,17 @@ route.get("/:id/actions", async (req, res) => {
       : res.json(projectActions);
   } catch (err) {
     res.json({ message: "Could not retrieve the project actions." });
+  }
+});
+
+route.post("/add-project", checkNameLength, async (req, res) => {
+  const newProject = req.body;
+  await projectsDb.insert(newProject);
+
+  try {
+    res.status(201).json({ message: `Project has been created!` });
+  } catch (err) {
+    res.json({ message: "Could not create a new project." });
   }
 });
 
