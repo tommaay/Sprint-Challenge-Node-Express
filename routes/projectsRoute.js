@@ -69,10 +69,27 @@ route.delete("/:id", async (req, res) => {
     !project
       ? res
           .status(404)
-          .json({ message: "There is no project with that ID number." })
+          .json({ message: "Cannot delete a project that does not exist." })
       : res.json(project);
   } catch (err) {
     res.json({ message: "Could not delete the project." });
+  }
+});
+
+route.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const project = await projectsDb.get(id);
+  const updatedProject = req.body;
+  await projectsDb.update(id, updatedProject);
+
+  try {
+    !project
+      ? res
+          .status(404)
+          .json({ message: "Cannot update a project that does not exist." })
+      : res.json(updatedProject);
+  } catch (err) {
+    res.json({ message: "Could not update the project." });
   }
 });
 
