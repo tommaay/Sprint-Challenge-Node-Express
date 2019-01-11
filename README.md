@@ -43,7 +43,7 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ X ] How can we partition our application into sub-applications?
 
-  - By modularizing parts of code using libraries and frameworks.
+  - By modularizing parts of code using libraries and frameworks
 
 ## Project Setup
 
