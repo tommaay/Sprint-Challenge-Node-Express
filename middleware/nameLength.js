@@ -1,7 +1,6 @@
 module.exports = (req, res, next) => {
   const project = req.body;
   const { name } = project;
-  console.log(name);
 
   if (name.length <= 128) {
     req.body.name = name;
