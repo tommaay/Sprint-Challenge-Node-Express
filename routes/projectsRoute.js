@@ -60,4 +60,20 @@ route.post("/add-project", checkNameLength, async (req, res) => {
   }
 });
 
+route.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const project = await projectsDb.get(id);
+  await projectsDb.remove(id);
+
+  try {
+    !project
+      ? res
+          .status(404)
+          .json({ message: "There is no project with that ID number." })
+      : res.json(project);
+  } catch (err) {
+    res.json({ message: "Could not delete the project." });
+  }
+});
+
 module.exports = route;
